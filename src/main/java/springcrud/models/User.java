@@ -3,20 +3,14 @@ package springcrud.models;
 //@Entity
 //@Table(name="users_crud")
 public class User {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //    @Id
+    //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String surname;
     private int yearOfBirth;
     
-    public User() { }
-    
-    public User(long id, String name, String surname, int yearOfBirth) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.yearOfBirth = yearOfBirth;
+    public User() {
     }
     
     public long getId() {

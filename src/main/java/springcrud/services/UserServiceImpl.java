@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import springcrud.dao.UserDao;
 import springcrud.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,9 +18,22 @@ public class UserServiceImpl implements UserService {
         return userDao.getAll();
     }
     
-    public List<User> getUserById(int id) {
-        List<User> list = new ArrayList<>();
-        list.add(userDao.getById(id));
-        return list;
+    public User getUserById(long id) {
+        return userDao.getById(id);
+    }
+    
+    @Override
+    public void saveUser(User user) {
+        userDao.save(user);
+    }
+    
+    @Override
+    public void updateUser(long id, User newUser) {
+        userDao.update(id, newUser);
+    }
+    
+    @Override
+    public void deleteUserById(long id) {
+        userDao.deleteById(id);
     }
 }

@@ -8,22 +8,18 @@ import java.util.List;
 
 @Component
 public class UserDaoImpl implements UserDao {
-    
-    private static long count;
     private final List<User> userList;
+    private static long count;
     
     public UserDaoImpl() {
         userList = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            count++;
-            userList.add(
-                    new User(
-                            count,
-                            "name-" + count,
-                            "surname-" + count,
-                            (int) (Math.random() * 50 + 1950)
-                    )
-            );
+            User user = new User();
+            user.setId(++count);
+            user.setName("Name-" + count);
+            user.setSurname("Surname-" + count);
+            user.setYearOfBirth((int) (Math.random() * 50 + 1950));
+            userList.add(user);
         }
     }
     
@@ -41,16 +37,21 @@ public class UserDaoImpl implements UserDao {
     
     @Override
     public void save(User user) {
-    
+        if (user.getId() == 0)
+            user.setId(++count);
+        userList.add(user);
     }
     
     @Override
-    public void update(User user) {
-    
+    public void update(long id, User newUser) {
+        User oldUser = getById(id);
+        oldUser.setName(newUser.getName());
+        oldUser.setSurname(newUser.getSurname());
+        oldUser.setYearOfBirth(newUser.getYearOfBirth());
     }
     
     @Override
     public void deleteById(long id) {
-    
+        userList.removeIf(user -> user.getId() == id);
     }
 }
