@@ -1,57 +1,57 @@
 package springcrud.dao;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import springcrud.models.User;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
-    private final List<User> userList;
-    private static long count;
+    private final SessionFactory sessionFactory;
     
-    public UserDaoImpl() {
-        userList = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
-            User user = new User();
-            user.setId(++count);
-            user.setName("Name-" + count);
-            user.setSurname("Surname-" + count);
-            user.setYearOfBirth((int) (Math.random() * 50 + 1950));
-            userList.add(user);
-        }
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
     
     @Override
+    @SuppressWarnings("unchecked")
+    @Transactional
     public List<User> getAll() {
-        return userList;
+        return sessionFactory.getCurrentSession()
+                .createQuery("from User")
+                .getResultList();
     }
     
     @Override
+    @Transactional
     public User getById(long id) {
-        return userList.stream()
-                .filter(user -> user.getId() == id)
-                .findAny().orElse(null);
+        return (User) sessionFactory.getCurrentSession()
+                .createQuery("FROM User WHERE id=:id")
+                .setParameter("id", id)
+                .getSingleResult();
     }
     
     @Override
+    @Transactional
     public void save(User user) {
-        if (user.getId() == 0)
-            user.setId(++count);
-        userList.add(user);
+        sessionFactory.getCurrentSession().save(user);
     }
     
     @Override
+    @Transactional
     public void update(long id, User newUser) {
         User oldUser = getById(id);
         oldUser.setName(newUser.getName());
         oldUser.setSurname(newUser.getSurname());
         oldUser.setYearOfBirth(newUser.getYearOfBirth());
+        sessionFactory.getCurrentSession().update(oldUser);
     }
     
     @Override
+    @Transactional
     public void deleteById(long id) {
-        userList.removeIf(user -> user.getId() == id);
+        sessionFactory.getCurrentSession().delete(getById(id));
     }
 }

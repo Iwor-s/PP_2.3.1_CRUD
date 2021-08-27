@@ -1,13 +1,16 @@
 package springcrud.models;
 
-//@Entity
-//@Table(name="users_crud")
+import javax.persistence.*;
+
+@Entity
+@Table(name="users_crud")
 public class User {
-    //    @Id
-    //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String surname;
+    @Column(name="year_of_birth")
     private int yearOfBirth;
     
     public User() {
