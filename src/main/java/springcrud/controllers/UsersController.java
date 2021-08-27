@@ -23,7 +23,8 @@ public class UsersController {
         return "users/index";
     }
     @RequestMapping("/{id}")
-    public String showOne(@PathVariable("id") int id) {
-        return "users/user";
+    public String showOne(Model model, @PathVariable("id") int id) {
+        model.addAttribute("users", userService.getUserById(id));
+        return "users/index";
     }
 }

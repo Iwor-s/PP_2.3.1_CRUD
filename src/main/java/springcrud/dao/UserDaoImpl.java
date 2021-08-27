@@ -34,7 +34,9 @@ public class UserDaoImpl implements UserDao {
     
     @Override
     public User getById(long id) {
-        return null;
+        return userList.stream()
+                .filter(user -> user.getId() == id)
+                .findAny().orElse(null);
     }
     
     @Override

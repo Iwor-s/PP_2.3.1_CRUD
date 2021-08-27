@@ -28,14 +28,12 @@
         <th>Surname</th>
         <th>Year of Birth</th>
     </tr>
-    <th:block th:each="user : ${users}">
-        <tr>
+        <tr th:each="user : ${users}">
             <td th:text="${user.getId()}"></td>
             <td th:text="${user.getName()}"></td>
             <td th:text="${user.getSurname()}"></td>
             <td th:text="${user.getYearOfBirth()}"></td>
         </tr>
-    </th:block>
 </table>
 
 </body>
