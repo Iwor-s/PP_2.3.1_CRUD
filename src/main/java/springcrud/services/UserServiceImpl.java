@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 import springcrud.dao.UserDao;
 import springcrud.models.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     

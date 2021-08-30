@@ -4,7 +4,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import springcrud.models.User;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -17,7 +16,6 @@ public class UserDaoImpl implements UserDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional
     public List<User> getAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from User")
@@ -25,7 +23,6 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
-    @Transactional
     public User getById(long id) {
         return (User) sessionFactory.getCurrentSession()
                 .createQuery("FROM User WHERE id=:id")
@@ -34,13 +31,11 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
-    @Transactional
     public void save(User user) {
         sessionFactory.getCurrentSession().save(user);
     }
     
     @Override
-    @Transactional
     public void update(long id, User newUser) {
         User oldUser = getById(id);
         oldUser.setName(newUser.getName());
@@ -50,7 +45,6 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
-    @Transactional
     public void deleteById(long id) {
         sessionFactory.getCurrentSession().delete(getById(id));
     }
