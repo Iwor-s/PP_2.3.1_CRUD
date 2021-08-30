@@ -16,7 +16,7 @@ public class UsersController {
         this.userService = userService;
     }
     
-    @GetMapping()
+    @GetMapping
     public String showAll(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users/users";
@@ -27,7 +27,7 @@ public class UsersController {
         return "users/new";
     }
     
-    @PostMapping()
+    @PostMapping
     public String create(@ModelAttribute("user") User user) {
         userService.saveUser(user);
         return "redirect:/users";
