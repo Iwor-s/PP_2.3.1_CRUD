@@ -36,12 +36,8 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
-    public void update(long id, User newUser) {
-        User oldUser = getById(id);
-        oldUser.setName(newUser.getName());
-        oldUser.setSurname(newUser.getSurname());
-        oldUser.setYearOfBirth(newUser.getYearOfBirth());
-        sessionFactory.getCurrentSession().update(oldUser);
+    public void update(User user) {
+        sessionFactory.getCurrentSession().update(user);
     }
     
     @Override
